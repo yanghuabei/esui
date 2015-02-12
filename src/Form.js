@@ -183,6 +183,7 @@ define(
          *
          * @extends Panel
          * @constructor
+         * @override
          */
         function Form(options) {
             Panel.apply(this, arguments);
@@ -235,8 +236,8 @@ define(
              * @member Form
              * @preventable
              */
-            var event = this.fire('beforevalidate');
-            if (event.isDefaultPrevented()) {
+            var beforeValidateEvent = this.fire('beforevalidate');
+            if (beforeValidateEvent.isDefaultPrevented()) {
                 return;
             }
             try {
@@ -257,8 +258,8 @@ define(
                  * @member Form
                  * @preventable
                  */
-                var event = this.fire('aftervalidate', { isValid: isValid });
-                if (event.isDefaultPrevented()) {
+                var afterValidateEvent = this.fire('aftervalidate', {isValid: isValid});
+                if (afterValidateEvent.isDefaultPrevented()) {
                     return;
                 }
 
@@ -295,7 +296,7 @@ define(
                  *
                  * @param {Error} error 错误对象
                  */
-                this.fire('submitfail', { error: ex });
+                this.fire('submitfail', {error: ex});
             }
         };
 
@@ -556,6 +557,7 @@ define(
                             this.viewContext.get(record.oldValue[i]);
                         if (oldButton) {
                             oldButton.un('click', this.validateAndSubmit, this);
+                            oldButton.un('click', false);
                         }
                     }
 
@@ -564,10 +566,11 @@ define(
             }
 
             if (shouldAttachSubmit) {
-                for (var i = 0; i < this.submitButton.length; i++) {
-                    var button = this.viewContext.get(this.submitButton[i]);
+                for (var j = 0; j < this.submitButton.length; j++) {
+                    var button = this.viewContext.get(this.submitButton[j]);
                     if (button) {
                         button.on('click', this.validateAndSubmit, this);
+                        button.on('click', false);
                     }
                 }
             }
@@ -589,8 +592,9 @@ define(
              *
              * 为方便HTML生成控件，该属性可以使用逗号或空格分隔的字符串
              */
-            properties.submitButton =
-                lib.splitTokenList(properties.submitButton);
+            if (properties.hasOwnProperty('submitButton')) {
+                properties.submitButton = lib.splitTokenList(properties.submitButton);
+            }
             Panel.prototype.setProperties.call(this, properties);
         };
 
