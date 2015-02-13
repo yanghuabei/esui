@@ -36,11 +36,20 @@ define(
          * @override
          */
         SearchBox.prototype.initOptions = function (options) {
-            var properties = {};
+            var properties = {
+                // 搜索模式：`instant`、`normal`
+                searchMode: 'normal',
+                // 是否是最小化的，默认的样式是仅显示放大镜
+                minimized: false
+            };
             lib.extend(properties, options);
 
             if (properties.disabled === 'false') {
                 properties.disabled = false;
+            }
+
+            if (properties.minimized === 'false') {
+                properties.minimized = false;
             }
 
             if (lib.isInput(this.main)) {
@@ -78,32 +87,33 @@ define(
          * @override
          */
         SearchBox.prototype.initStructure = function () {
-            // 一个搜索框由一个文本框和一个按钮组成
-            var textboxOptions = {
-                mode: 'text',
-                childName: 'text',
-                height: this.height,
-                viewContext: this.viewContext,
-                placeholder: this.placeholder
-            };
+            var tpl = ''
+                + '<div data-ui-mode="text" data-ui-childName="text" data-ui-height=${height}'
+                +     'data-ui-type="TextBox" data-ui-placeholder=${this.placeholder}'
+                +     'data-ui-icon="' + (this.mode === 'instant' ? 'icon ui-icon-search' : '') + '">'
+                + '</div>'
+                + '<span data-ui="childName:clear;type:Button;" class="${clearClasses}"></span>';
+
+            // 正常模式下放大镜放到输入框后
+            if (this.mode === 'normal') {
+                tpl += '<span data-ui="childName:search;type:Button;" class="${searchClasses}">搜索</span>';
+            }
+
+            var html = lib.format(
+                tpl,
+                {
+                    height: this.height,
+                    clearClasses: this.helper.getPartClassName('clear'),
+                    searchClasses: this.helper.getPartClassName('search')
+                }
+            );
 
             if (lib.isInput(this.main)) {
                 this.helper.replaceMain();
             }
 
-            var textbox = ui.create('TextBox', textboxOptions);
-            textbox.appendTo(this.main);
-            this.addChild(textbox);
-
-            var buttonOptions = {
-                main: document.createElement('span'),
-                childName: 'button',
-                content: '搜索',
-                viewContext: this.viewContext
-            };
-            var button = ui.create('Button', buttonOptions);
-            button.appendTo(this.main);
-            this.addChild(button);
+            this.main.innerHTML = html;
+            this.helper.initChildren(this.main);
         };
 
         /**
@@ -116,7 +126,9 @@ define(
             var textbox = this.getChild('text');
             var delegate = require('mini-event').delegate;
 
-            delegate(textbox, this, 'input');
+            // 即时模式下将input事件代理为search事件
+            var inputEventType = this.mode === 'instant' ? 'input' : 'search';
+            delegate(textbox, 'input', this, inputEventType);
             delegate(textbox, 'enter', this, 'search');
             // 回车时要取消掉默认行为，否则会把所在的表单给提交了
             textbox.on(
@@ -127,11 +139,11 @@ define(
                     }
                 }
             );
-            textbox.on('focus', focus, this);
-            textbox.on('blur', lib.bind(this.removeState, this, 'focus'));
+            // textbox.on('focus', focus, this);
+            // textbox.on('blur', lib.bind(this.removeState, this, 'focus'));
 
-            var button = this.getChild('button');
-            button.on('click', click, this);
+            var searchButton = this.getChild('search');
+            delegate(searchButton, 'click', this, 'search');
         };
 
         function focus() {
@@ -140,10 +152,6 @@ define(
         }
 
         function click() {
-            if (this.hasState('clear')) {
-                this.getChild('text').setValue('');
-                this.removeState('clear');
-            }
             this.fire('search');
         }
 
