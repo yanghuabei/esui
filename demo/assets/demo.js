@@ -63,7 +63,7 @@ $(function () {
     $('.view').on('click', '.viewer li', viewSource);
     $('.source, .viewer li').on('mousedown', false);
     //$('html').on('mousedown', hideSource);
-    
+
     var navItems =
         '<li><a href="BoxControl.html">Box Control</a></li>' +
         '<li><a href="Button.html">Button</a></li>' +
@@ -82,6 +82,7 @@ $(function () {
         '<li><a href="Region.html">Region</a></li>' +
         '<li><a href="Schedule.html">Schedule</a></li>' +
         '<li><a href="Select.html">Select</a></li>' +
+        '<li><a href="SearchBox.html">SearchBox</a></li>' +
         '<li><a href="Sidebar.html">Sidebar</a></li>' +
         '<li><a href="Tab.html">Tab</a></li>' +
         '<li><a href="Table.html">Table</a></li>' +

@@ -40,7 +40,11 @@ define(
                 // 搜索模式：`instant`、`normal`
                 searchMode: 'normal',
                 // 是否是最小化的，默认的样式是仅显示放大镜
-                minimized: false
+                minimized: false,
+                // 默认值为''
+                value: '',
+                // 控件内部使用的状态，外部MUST NOT设置该属性
+                clear: false
             };
             lib.extend(properties, options);
 
@@ -50,6 +54,10 @@ define(
 
             if (properties.minimized === 'false') {
                 properties.minimized = false;
+            }
+
+            if (properties.value) {
+                properties.clear = true;
             }
 
             if (lib.isInput(this.main)) {
@@ -62,11 +70,11 @@ define(
                     properties.text = this.main.value;
                 }
 
-                if (!properties.maxLength && ( lib.hasAttribute(this.main, 'maxlength') || this.main.maxLength > 0)) {
+                if (!properties.maxLength && (lib.hasAttribute(this.main, 'maxlength') || this.main.maxLength > 0)) {
                     properties.maxLength = this.main.maxLength;
                 }
             }
-            //TODO: custom elments 的兼容
+            // TODO: custom elments 的兼容
             else {
                 if (!properties.text) {
                     properties.text = lib.getText(this.main);
@@ -87,15 +95,16 @@ define(
          * @override
          */
         SearchBox.prototype.initStructure = function () {
+            var searchIconClassName = 'icon ui-icon-search';
             var tpl = ''
-                + '<div data-ui-mode="text" data-ui-childName="text" data-ui-height=${height}'
-                +     'data-ui-type="TextBox" data-ui-placeholder=${this.placeholder}'
-                +     'data-ui-icon="' + (this.mode === 'instant' ? 'icon ui-icon-search' : '') + '">'
+                + '<div data-ui-mode="text" data-ui-child-name="text" data-ui-height="${height}"'
+                +     'data-ui-type="TextBox" data-ui-placeholder="${this.placeholder}"'
+                +     'data-ui-icon="' + (this.searchMode === 'instant' ? searchIconClassName : '') + '">'
                 + '</div>'
                 + '<span data-ui="childName:clear;type:Button;" class="${clearClasses}"></span>';
 
             // 正常模式下放大镜放到输入框后
-            if (this.mode === 'normal') {
+            if (this.searchMode === 'normal') {
                 tpl += '<span data-ui="childName:search;type:Button;" class="${searchClasses}">搜索</span>';
             }
 
@@ -104,7 +113,7 @@ define(
                 {
                     height: this.height,
                     clearClasses: this.helper.getPartClassName('clear'),
-                    searchClasses: this.helper.getPartClassName('search')
+                    searchClasses: this.helper.getPartClassName('search') + ' ' + searchIconClassName
                 }
             );
 
@@ -126,9 +135,14 @@ define(
             var textbox = this.getChild('text');
             var delegate = require('mini-event').delegate;
 
-            // 即时模式下将input事件代理为search事件
-            var inputEventType = this.mode === 'instant' ? 'input' : 'search';
-            delegate(textbox, 'input', this, inputEventType);
+            // 处理输入事件
+            textbox.on('input', onInput, this);
+            // 即时模式下输入触发搜索
+            if (this.searchMode === 'instant') {
+                delegate(textbox, 'input', this, 'search');
+            }
+
+            // 代理回车键事件
             delegate(textbox, 'enter', this, 'search');
             // 回车时要取消掉默认行为，否则会把所在的表单给提交了
             textbox.on(
@@ -139,20 +153,29 @@ define(
                     }
                 }
             );
-            // textbox.on('focus', focus, this);
-            // textbox.on('blur', lib.bind(this.removeState, this, 'focus'));
 
             var searchButton = this.getChild('search');
-            delegate(searchButton, 'click', this, 'search');
+            if (searchButton) {
+                delegate(searchButton, 'click', this, 'search');
+            }
+
+            var clearButton = this.getChild('clear');
+            clearButton.on('click', clear, this);
         };
 
-        function focus() {
-            this.removeState('clear');
-            this.addState('focus');
+        function onInput() {
+            var textbox = this.getChild('text');
+            var method = textbox.getValue() ? 'addState' : 'removeState';
+            this[method]('clear');
         }
 
-        function click() {
-            this.fire('search');
+        function clear() {
+            var textbox = this.getChild('text');
+            textbox.setValue('');
+            this.removeState('clear');
+            if (this.searchMode === 'instant') {
+                this.fire('search');
+            }
         }
 
         /**
@@ -236,6 +259,13 @@ define(
                 paint: function (box, fitWidth) {
                     var method = fitWidth ? 'addState' : 'removeState';
                     box[method]('fit-width');
+                }
+            },
+            {
+                name: 'clear',
+                paint: function (box, clear) {
+                    var method = clear ? 'addState' : 'removeState';
+                    box[method]('clear');
                 }
             }
         );
