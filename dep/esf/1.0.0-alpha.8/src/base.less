@@ -1,0 +1,23 @@
+.esf-clearfix {
+    .clearfix();
+}
+
+// less mixin doesn't support variable.
+.esf-disabled {
+    .opacity(40);
+    cursor: not-allowed !important;
+}
+
+// mixins
+.esf-list-unstyled() {
+    padding-left: 0;
+    .reset-list-style;
+}
+
+.esf-transition(@transition) {
+    
+}
+
+.esf-transition(@transition) when (@esf-enable-transition-effect) {
+    .transition(@transition);
+}

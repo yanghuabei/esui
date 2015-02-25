@@ -1,0 +1,104 @@
+@esf-label-margin: 0em;
+@esf-label-padding: 0.5em 0.8em;
+@esf-label-background: #E8E8E8;
+@esf-label-border: none;
+@esf-label-color: rgba(0, 0, 0, 0.65);
+@esf-label-border-radius: @default-border-radius;
+
+.@{esf-class-prefix}-label-custom,
+.@{esf-class-prefix}-label-pointer,
+.@{esf-class-prefix}-label-pointer-left,
+.@{esf-class-prefix}-label-pointer-right,
+.@{esf-class-prefix}-label-pointer-bottom,
+.@{esf-class-prefix}-label-circular {
+    display: inline-block;
+    vertical-align: middle;
+    margin: @esf-label-margin;
+    padding: @esf-label-padding;
+
+    background: @esf-label-background;
+    border: @esf-label-border;
+    color: @esf-label-color;
+
+    .border-radius(@esf-label-border-radius);
+    .box-sizing(border-box);
+    .esf-transition(background 0.1s linear);
+}
+
+.@{esf-class-prefix}-label-hover {
+    cursor: pointer;
+    .opacity(80);
+    .transition(0.2s opacity ease);
+    &:hover {
+        .opacity(99);
+    }
+}
+
+.@{esf-class-prefix}-label-pointer {
+    position: relative;
+    margin-top: .8em;
+    &:before {
+        .triangle(top, 1em, @esf-label-background, side);
+        // override border width from est
+        border-width: 0.7em;
+        content: '';
+        left: 50%;
+        margin-top: 0;
+        top: -0.5em;
+        border-top: 0;
+    }
+}
+
+.@{esf-class-prefix}-label-pointer-bottom {
+    position: relative;
+    margin-bottom: .8em;
+    &:before {
+        .triangle(bottom, 1em, @esf-label-background, side);
+        border-width: 0.7em;
+        content: '';
+        left: 50%;
+        margin-top: 0;
+        bottom: -.5em;
+        border-bottom: 0;
+    }
+}
+
+.@{esf-class-prefix}-label-pointer-left {
+    position: relative;
+    margin-left: .8em;
+    &:before {
+        .triangle(left, 1em, @esf-label-background, side);
+        border-width: 0.7em;
+        content: '';
+        left: -0.5em;
+        margin-top: 0;
+        border-left: 0;
+        margin-left: 0;
+    }
+}
+
+.@{esf-class-prefix}-label-pointer-right {
+    position: relative;
+    margin-right: .8em;
+    &:before {
+        .triangle(right, 1em, @esf-label-background, side);
+        border-width: 0.7em;
+        content: '';
+        right: 0;
+        margin-top: 0;
+        border-right: 0;
+        right: -.5em;
+    }
+}
+
+.@{esf-class-prefix}-label-circular {
+    min-width: 2em;
+    min-height: 2em;
+
+    padding: 0.5em !important;
+
+    line-height: 1em;
+    text-align: center;
+
+    .border-radius(500em);
+}

@@ -1,0 +1,18 @@
+{
+    "README.md": "12e9f0fd73a19bb73ab85847d7fa599d",
+    "demo\\assets\\demo.js": "1dbea430992a90d36eb1f02d045e415c",
+    "demo\\assets\\site.less": "a08398050b30a0d6e39e3d450138b76b",
+    "demo\\assets\\site.css": "0881938b3bc6fa271b7a9a68f1ce2623",
+    "demo\\demo.html": "62a931fccf5a96ea536b86cbf48c0787",
+    "fonts\\font-awesome\\FontAwesome.otf": "19231917733e2bcdf257c9be99cdbaf1",
+    "fonts\\font-awesome\\fontawesome-webfont.eot": "7149833697a959306ec3012a8588dcfa",
+    "fonts\\font-awesome\\fontawesome-webfont.svg": "65bcbc899f379216109acd0b6c494618",
+    "fonts\\font-awesome\\fontawesome-webfont.woff": "d95d6f5d5ab7cfefd09651800b69bd54",
+    "package.json": "f69ac643d8413bb8f81a9b4ed4fe4094",
+    "src\\icon-utils.less": "5dcc0fbecd7c1b61e2a077a9129f1637",
+    "src\\icons-variables.less": "305384d33105a432aef1d33c7a3abb6c",
+    "src\\icons.less": "4faac39a142e197a25240a0449af87b8",
+    "fonts\\font-awesome\\fontawesome-webfont.ttf": "c4668ed2440df82d3fd2f8be9d31d07d",
+    "src\\main.less": "8df3edf5a2253f94b4e8bae9f6662005",
+    "src\\variables.less": "7cc7def3ac44323fe49d0ebc0962768e"
+}
