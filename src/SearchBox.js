@@ -42,7 +42,7 @@ define(
                 // 是否是最小化的，默认的样式是仅显示放大镜
                 minimized: false,
                 // 默认值为''
-                value: '',
+                text: '',
                 // 控件内部使用的状态，外部MUST NOT设置该属性
                 clear: false
             };
@@ -54,10 +54,6 @@ define(
 
             if (properties.minimized === 'false') {
                 properties.minimized = false;
-            }
-
-            if (properties.value) {
-                properties.clear = true;
             }
 
             if (lib.isInput(this.main)) {
@@ -85,6 +81,10 @@ define(
                 properties.title = this.main.title;
             }
 
+            if (properties.text) {
+                properties.clear = true;
+            }
+
             Control.prototype.initOptions.call(this, properties);
         };
 
@@ -95,11 +95,10 @@ define(
          * @override
          */
         SearchBox.prototype.initStructure = function () {
-            var searchIconClassName = 'icon ui-icon-search';
             var tpl = ''
                 + '<div data-ui-mode="text" data-ui-child-name="text" data-ui-height="${height}"'
-                +     'data-ui-type="TextBox" data-ui-placeholder="${this.placeholder}"'
-                +     'data-ui-icon="' + (this.searchMode === 'instant' ? searchIconClassName : '') + '">'
+                +     'data-ui-type="TextBox" data-ui-placeholder="${placeholder}"'
+                +     'data-ui-icon="${searchClasses}">'
                 + '</div>'
                 + '<span data-ui="childName:clear;type:Button;" class="${clearClasses}"></span>';
 
@@ -112,8 +111,9 @@ define(
                 tpl,
                 {
                     height: this.height,
+                    placeholder: this.placeholder,
                     clearClasses: this.helper.getPartClassName('clear'),
-                    searchClasses: this.helper.getPartClassName('search') + ' ' + searchIconClassName
+                    searchClasses: this.helper.getPartClassName('search')
                 }
             );
 
@@ -241,12 +241,10 @@ define(
             {
                 name: 'disabled',
                 paint: function (box, disabled) {
-                    if (disabled === 'false') {
-                        disabled = false;
-                    }
-
-                    var button = box.getChild('button');
-                    button.set('disabled', disabled);
+                    var clearButton = box.getChild('clear');
+                    clearButton.set('disabled', disabled);
+                    var searchButton = box.getChild('search');
+                    searchButton && searchButton.set('disabled', disabled);
                 }
             },
             {
