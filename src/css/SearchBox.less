@@ -1,18 +1,28 @@
  /**
   * ESUI (Enterprise Simple UI)
   * Copyright 2013 Baidu Inc. All rights reserved.
-  * 
+  *
   * @file 搜索框控件
   * @author otakustay
   */
 @import "mixin.less";
 @import "variable.less";
 
+@esui-search-box-textbox-height: 25px;
+
 .normal-search-icon() {
     background: transparent url(../img/search.png) no-repeat center -25px;
 }
 .active-search-icon() {
     background: transparent url(../img/search.png) no-repeat center 0;
+}
+
+.normal-clear-icon() {
+    background: transparent url(../img/esui-btn-clear.png) no-repeat center;
+}
+
+.active-clear-icon() {
+    background: transparent url(../img/esui-btn-clear-hover.png) no-repeat center;
 }
 
 .@{ui-class-prefix}-searchbox {
@@ -22,7 +32,10 @@
 
     .@{ui-class-prefix}-textbox {
         input {
-            padding-right: 25px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            height: @esui-search-box-textbox-height;
             border: 1px solid #d8d8d8;
 
             &:hover {
@@ -30,67 +43,118 @@
             }
 
             &:focus {
-                border-color: #bbbbbb; 
+                border-color: #bbbbbb;
             }
         }
     }
 
-    .@{ui-class-prefix}-button {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 25px;
-        height: 25px;
-        border: 0;
-        padding: 0;
-        text-indent: -5000px;
-        .normal-search-icon();
+    .@{ui-class-prefix}-textbox-icon {
+        display: none;
+        height: @esui-search-box-textbox-height;
+    }
 
-        &:active {
-            border: 0;
-            .active-search-icon();
-        }
+    .@{ui-class-prefix}-button {
+        min-height: 0;
+        border: none;
     }
 
     .@{ui-class-prefix}-button-disabled {
         &:hover {
             cursor: default;
         }
+    }
+}
+
+.@{ui-class-prefix}-searchbox-clear {
+    .normal-clear-icon();
+
+    &:hover,
+    &:active {
+        .active-clear-icon();
+    }
+}
+
+.@{ui-class-prefix}-searchbox-search {
+    .normal-search-icon();
+    text-indent: -5000px;
+    width: 25px;
+    height: @esui-search-box-textbox-height;
+
+    &:hover,
+    &:active {
+        background: none;
+        .active-search-icon();
+    }
+}
+
+.normal-searchbox-2x() {
+    background-image: url(../img/search@2x.png);
+    background-size: 15px 50px;
+    background-position: center -25px;
+}
+
+.active-searchbox-2x() {
+    background-image: url(../img/search@2x.png);
+    background-size: 15px 50px;
+    background-position: center 0;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .@{ui-class-prefix}-searchbox-search {
+        .normal-searchbox-2x();
+
+        &:hover,
         &:active {
-            .active-search-icon();
+            .active-searchbox-2x();
+        }
+    }
+
+    .@{ui-class-prefix}-searchbox-focus {
+        .@{ui-class-prefix}-searchbox-search {
+            .active-searchbox-2x();
         }
     }
 }
 
+// 搜索状态
+.@{ui-class-prefix}-searchbox-searched {
+   .@{ui-class-prefix}-textbox-icon {
+        display: inline-block;
+    }
+}
+
+// 独占一行
 .@{ui-class-prefix}-searchbox-fit-width {
     .@{ui-class-prefix}-textbox {
         width: 100% !important;
     }
 }
 
+// focus状态
 .@{ui-class-prefix}-searchbox-focus {
-    .@{ui-class-prefix}-button {
+    .@{ui-class-prefix}-searchbox-search {
         .active-search-icon();
     }
+
+    .@{ui-class-prefix}-searchbox-clear {
+        .active-clear-icon();
+    }
 }
 
-.searchbox-2x() {
-    background-image: url(../img/search@2x.png);
-    background-size: 15px 50px;
-}
+.@{ui-class-prefix}-searchbox-instant {
+    .@{ui-class-prefix}-searchbox-search {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
-    .@{ui-class-prefix}-searchbox .@{ui-class-prefix}-button {
-        .searchbox-2x();
-
-        &:active {
-            .searchbox-2x();
+    .@{ui-class-prefix}-textbox {
+        input {
+            padding-left: 25px;
         }
     }
 
-    .@{ui-class-prefix}-searchbox-focus {
-        .@{ui-class-prefix}-button {
-            .searchbox-2x();
-        }
+    .@{ui-class-prefix}-searchbox-search {
+        cursor: default;
     }
 }

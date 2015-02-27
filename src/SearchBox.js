@@ -44,7 +44,7 @@ define(
                 // 默认值为''
                 text: '',
                 // 控件内部使用的状态，外部MUST NOT设置该属性
-                clear: false
+                searched: false
             };
             lib.extend(properties, options);
 
@@ -82,7 +82,7 @@ define(
             }
 
             if (properties.text) {
-                properties.clear = true;
+                properties.searched = true;
             }
 
             Control.prototype.initOptions.call(this, properties);
@@ -98,14 +98,9 @@ define(
             var tpl = ''
                 + '<div data-ui-mode="text" data-ui-child-name="text" data-ui-height="${height}"'
                 +     'data-ui-type="TextBox" data-ui-placeholder="${placeholder}"'
-                +     'data-ui-icon="${searchClasses}">'
+                +     'data-ui-icon="${clearClasses}" data-ui-icon-position="right">'
                 + '</div>'
-                + '<span data-ui="childName:clear;type:Button;" class="${clearClasses}"></span>';
-
-            // 正常模式下放大镜放到输入框后
-            if (this.searchMode === 'normal') {
-                tpl += '<span data-ui="childName:search;type:Button;" class="${searchClasses}">搜索</span>';
-            }
+                + '<span data-ui="childName:search;type:Button;" class="${searchClasses}"></span>';
 
             var html = lib.format(
                 tpl,
@@ -154,25 +149,27 @@ define(
                 }
             );
 
+            // 清除搜索按钮
+            textbox.on('iconclick', clear, this);
+            textbox.on('focus', lib.bind(this.addState, this, 'focus'));
+            textbox.on('blur', lib.bind(this.removeState, this, 'focus'));
+
             var searchButton = this.getChild('search');
-            if (searchButton) {
+            if (this.searchMode === 'normal') {
                 delegate(searchButton, 'click', this, 'search');
             }
-
-            var clearButton = this.getChild('clear');
-            clearButton.on('click', clear, this);
         };
 
         function onInput() {
             var textbox = this.getChild('text');
             var method = textbox.getValue() ? 'addState' : 'removeState';
-            this[method]('clear');
+            this[method]('searched');
         }
 
         function clear() {
             var textbox = this.getChild('text');
             textbox.setValue('');
-            this.removeState('clear');
+            this.removeState('searched');
             if (this.searchMode === 'instant') {
                 this.fire('search');
             }
@@ -241,8 +238,6 @@ define(
             {
                 name: 'disabled',
                 paint: function (box, disabled) {
-                    var clearButton = box.getChild('clear');
-                    clearButton.set('disabled', disabled);
                     var searchButton = box.getChild('search');
                     searchButton && searchButton.set('disabled', disabled);
                 }
@@ -260,10 +255,23 @@ define(
                 }
             },
             {
-                name: 'clear',
-                paint: function (box, clear) {
-                    var method = clear ? 'addState' : 'removeState';
-                    box[method]('clear');
+                name: 'searched',
+                paint: function (box, searched) {
+                    var method = searched ? 'addState' : 'removeState';
+                    box[method]('searched');
+                }
+            },
+            {
+                name: 'minimized',
+                paint: function (box, minimized) {
+                    var method = minimized ? 'addState' : 'removeState';
+                    box[method]('minimized');
+                }
+            },
+            {
+                name: 'searchMode',
+                paint: function (box, searchMode) {
+                    box.addState(searchMode);
                 }
             }
         );
