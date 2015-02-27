@@ -691,7 +691,7 @@
   position: relative;
 }
 .ui-dropdown li {
-  font-size: 10.5px;
+  font-size: 14px;
   position: relative;
 }
 .ui-dropdown li > :first-child {
@@ -715,7 +715,7 @@
 .ui-dropdown-heading {
   padding: 0.5em 1em;
   font-weight: bold;
-  font-size: 10.5px;
+  font-size: 14px;
 }
 .ui-dropdown-flyout {
   position: absolute;
@@ -1352,25 +1352,25 @@
   display: inline-block;
 }
 .ui-base {
-  font-size: 12px !important;
+  font-size: 16px !important;
 }
 .ui-mini {
-  font-size: 9px !important;
+  font-size: 12px !important;
 }
 .ui-small {
-  font-size: 10.5px !important;
+  font-size: 14px !important;
 }
 .ui-large {
-  font-size: 13.5px !important;
+  font-size: 18px !important;
 }
 .ui-big {
-  font-size: 15px !important;
+  font-size: 20px !important;
 }
 .ui-huge {
-  font-size: 16.5px !important;
+  font-size: 22px !important;
 }
 .ui-massive {
-  font-size: 18px !important;
+  font-size: 24px !important;
 }
 /**
  * ESUI (Enterprise Simple UI)
@@ -1496,6 +1496,19 @@ esui-wizard {
 }
 .ui-validity:not(.state-hidden) ~ .ui-form-hint {
   display: none;
+}
+/**
+ * ESUI (Enterprise Simple UI)
+ * Copyright 2013 Baidu Inc. All rights reserved.
+ *
+ * @file 按钮样式
+ * @author dbear
+ */
+/**
+ * 基础按钮样式
+ */
+esui-button {
+  display: inline-block;
 }
 .ui-boxgroup-horizontal .ui-boxgroup-wrapper {
   *zoom: 1;
@@ -2782,6 +2795,38 @@ span.ui-crumb-node {
   color: #6ccdc0;
   cursor: help;
 }
+.ui-searchbox {
+  *zoom: 1;
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  position: relative;
+  overflow: hidden;
+}
+.ui-searchbox .ui-textbox-icon {
+  right: 5000px;
+}
+.ui-searchbox-searched .ui-textbox input {
+  padding-right: 2.6em;
+}
+.ui-searchbox-searched .ui-textbox-icon {
+  right: 0;
+}
+.ui-searchbox-fit-width .ui-textbox {
+  width: 100% !important;
+}
+.ui-searchbox-instant .ui-icon-search {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.6em;
+  height: 2.4em;
+  line-height: 2.4em;
+  text-align: center;
+}
+.ui-searchbox-instant .ui-textbox input {
+  padding-left: 2.6em;
+}
 /** 警告框，确认框 */
 .ui-dialog-alert .ui-dialog-icon,
 .ui-dialog-confirm .ui-dialog-icon {
@@ -2822,104 +2867,6 @@ span.ui-crumb-node {
 .ui-toast-success .ui-toast-content {
   background: #5cb85c;
   color: #ffffff;
-}
-/**
-  * ESUI (Enterprise Simple UI)
-  * Copyright 2013 Baidu Inc. All rights reserved.
-  *
-  * @file 搜索框控件
-  * @author otakustay
-  */
-.ui-searchbox {
-  *zoom: 1;
-  display: inline-block;
-  *display: inline;
-  zoom: 1;
-  position: relative;
-  overflow: hidden;
-}
-.ui-searchbox .ui-textbox input {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  height: 25px;
-  border: 1px solid #d8d8d8;
-}
-.ui-searchbox .ui-textbox input:hover {
-  border-color: #d0d0d0;
-}
-.ui-searchbox .ui-textbox input:focus {
-  border-color: #bbbbbb;
-}
-.ui-searchbox .ui-textbox-icon {
-  display: none;
-  height: 25px;
-}
-.ui-searchbox .ui-button {
-  min-height: 0;
-  border: none;
-}
-.ui-searchbox .ui-button-disabled:hover {
-  cursor: default;
-}
-.ui-searchbox-clear {
-  background: transparent url(../img/esui-btn-clear.png) no-repeat center;
-}
-.ui-searchbox-clear:hover,
-.ui-searchbox-clear:active {
-  background: transparent url(../img/esui-btn-clear-hover.png) no-repeat center;
-}
-.ui-searchbox-search {
-  background: transparent url(../img/search.png) no-repeat center -25px;
-  text-indent: -5000px;
-  width: 25px;
-  height: 25px;
-}
-.ui-searchbox-search:hover,
-.ui-searchbox-search:active {
-  background: none;
-  background: transparent url(../img/search.png) no-repeat center 0;
-}
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .ui-searchbox-search {
-    background-image: url(../img/search@2x.png);
-    background-size: 15px 50px;
-    background-position: center -25px;
-  }
-  .ui-searchbox-search:hover,
-  .ui-searchbox-search:active {
-    background-image: url(../img/search@2x.png);
-    background-size: 15px 50px;
-    background-position: center 0;
-  }
-  .ui-searchbox-focus .ui-searchbox-search {
-    background-image: url(../img/search@2x.png);
-    background-size: 15px 50px;
-    background-position: center 0;
-  }
-}
-.ui-searchbox-searched .ui-textbox-icon {
-  display: inline-block;
-}
-.ui-searchbox-fit-width .ui-textbox {
-  width: 100% !important;
-}
-.ui-searchbox-focus .ui-searchbox-search {
-  background: transparent url(../img/search.png) no-repeat center 0;
-}
-.ui-searchbox-focus .ui-searchbox-clear {
-  background: transparent url(../img/esui-btn-clear-hover.png) no-repeat center;
-}
-.ui-searchbox-instant .ui-searchbox-search {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.ui-searchbox-instant .ui-textbox input {
-  padding-left: 25px;
-}
-.ui-searchbox-instant .ui-searchbox-search {
-  cursor: default;
 }
 [class*='ui-icon-'] {
   font-family: FontAwesome;

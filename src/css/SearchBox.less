@@ -9,6 +9,7 @@
 @import "variable.less";
 
 @esui-search-box-textbox-height: 25px;
+@esui-search-box-icon-width: 25px;
 
 .normal-search-icon() {
     background: transparent url(../img/search.png) no-repeat center -25px;
@@ -32,9 +33,7 @@
 
     .@{ui-class-prefix}-textbox {
         input {
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
+            .box-sizing(border-box);
             height: @esui-search-box-textbox-height;
             border: 1px solid #d8d8d8;
 
@@ -49,8 +48,11 @@
     }
 
     .@{ui-class-prefix}-textbox-icon {
-        display: none;
+        right: 5000px;
         height: @esui-search-box-textbox-height;
+        width: @esui-search-box-icon-width;
+        position: absolute;
+        top: 0;
     }
 
     .@{ui-class-prefix}-button {
@@ -77,8 +79,10 @@
 .@{ui-class-prefix}-searchbox-search {
     .normal-search-icon();
     text-indent: -5000px;
-    width: 25px;
+    width: @esui-search-box-icon-width;
     height: @esui-search-box-textbox-height;
+    .inline-block();
+    vertical-align: middle;
 
     &:hover,
     &:active {
@@ -118,8 +122,14 @@
 
 // 搜索状态
 .@{ui-class-prefix}-searchbox-searched {
-   .@{ui-class-prefix}-textbox-icon {
-        display: inline-block;
+    .@{ui-class-prefix}-textbox {
+        input {
+            padding-right: @esui-search-box-icon-width;
+        }
+    }
+
+    .@{ui-class-prefix}-textbox-icon {
+        right: 0;
     }
 }
 
@@ -150,7 +160,7 @@
 
     .@{ui-class-prefix}-textbox {
         input {
-            padding-left: 25px;
+            padding-left: @esui-search-box-icon-width;
         }
     }
 

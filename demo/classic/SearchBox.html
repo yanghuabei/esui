@@ -17,27 +17,40 @@
 </head>
 <body>
     <h1>SearchBox</h1>
-    <div id="page">
-        <ul id="navigator">
-        </ul>
-        <div id="main">
-            <h2>SearchBox</h2>
-            <section class="intro">
-                <p>SearchBox</p>
-            </section>
-            <section class="view">
-                <ul class="viewer">
-                    <li class="view-markup">结构</li>
-                </ul>
-                <div class="example">
-                    <input data-ui-id="search" data-ui-type="SearchBox" data-ui-width="300"
-                        value="abc" placeholder="haha" maxlength="10" title="!!!" />
-                    <esui-search-box data-ui-width="300"
-                        value="abadadc" placeholder="haha" maxlength="10" title="!!!"></esui-search-box>
-                </div>
-            </section>
+        <div id="page">
+            <ul id="navigator">
+            </ul>
+            <div id="main">
+                <h2>SearchBox</h2>
+                <section class="intro">
+                    <p></p>
+                </section>
+                <section class="view">
+                    <ul class="viewer">
+                        <li class="view-markup">结构</li>
+                    </ul>
+                    <div class="example">
+                        <div data-ui-type="SearchBox"></div>
+                    </div>
+                    <div class="example">
+                        <div data-ui-type="SearchBox" data-ui-search-mode="instant"></div>
+                    </div>
+                </section>
+               <!--  <section class="intro">
+                    <p>变化。</p>
+                </section>
+                <section class="view">
+                    <ul class="viewer">
+                        <li class="view-markup">结构</li>
+                    </ul>
+                    <div class="example ui-demo-light-stage">
+                        <strong data-ui-type="Label" data-ui-variants="custom">Hello Label!</strong>
+                        <esui-label data-ui-type="Label" data-ui-variants="pointer-left hover">Custom Label!</esui-label>
+                        <esui-label data-ui-type="Label" data-ui-variants="circular">123</esui-label>
+                    </div>
+                </section> -->
+            </div>
         </div>
-    </div>
     <script>
         require(
             [
@@ -45,13 +58,13 @@
             ],
             function (ui, SearchBox) {
                 ui.init(document.body);
-                var search = ui.get('search');
-                search.on(
-                    'search',
-                    function (e) {
-                        console.log(e.type, e.target);
-                    }
-                );
+                // var search = ui.get('search');
+                // search.on(
+                //     'search',
+                //     function (e) {
+                //         console.log(e.type, e.target);
+                //     }
+                // );
             }
         );
     </script>

@@ -30,10 +30,10 @@
                         <li class="view-markup">结构</li>
                     </ul>
                     <div class="example">
-                        <div data-ui-type="SearchBox"></div>
+                        <div data-ui-type="SearchBox" data-ui-id="normal-search"></div>
                     </div>
                     <div class="example">
-                        <div data-ui-type="SearchBox" data-ui-search-mode="instant"></div>
+                        <div data-ui-type="SearchBox" data-ui-id="instant-search" data-ui-search-mode="instant"></div>
                     </div>
                 </section>
                <!--  <section class="intro">
@@ -59,6 +59,10 @@
             ],
             function (ui) {
                 ui.init();
+                var normalSearch = ui.get('normal-search');
+                normalSearch.on('search', function (e){console.log(e.target.getValue());})
+                var instantSearch = ui.get('instant-search');
+                instantSearch.on('search', function (e){console.log(e.target.getValue());})
             }
         )
         </script>

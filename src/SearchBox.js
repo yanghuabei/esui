@@ -99,15 +99,27 @@ define(
                 + '<div data-ui-mode="text" data-ui-child-name="text" data-ui-height="${height}"'
                 +     'data-ui-type="TextBox" data-ui-placeholder="${placeholder}"'
                 +     'data-ui-icon="${clearClasses}" data-ui-icon-position="right">'
-                + '</div>'
-                + '<span data-ui="childName:search;type:Button;" class="${searchClasses}"></span>';
+                + '</div>';
+
+            // 即时搜索不需要搜索按钮
+            var searchIconHTML = '<span class="' + this.helper.getIconClass('search') + '"></span>';
+            var searchTPL = ''
+                + '<button data-ui="childName:search;type:Button;" class="${searchClasses}">'
+                +     searchIconHTML
+                + '</button>';
+            if (this.searchMode === 'instant') {
+                tpl += searchIconHTML;
+            }
+            else {
+                tpl += searchTPL;
+            }
 
             var html = lib.format(
                 tpl,
                 {
                     height: this.height,
                     placeholder: this.placeholder,
-                    clearClasses: this.helper.getPartClassName('clear'),
+                    clearClasses: this.helper.getIconClass('times-circle'),
                     searchClasses: this.helper.getPartClassName('search')
                 }
             );
@@ -155,7 +167,7 @@ define(
             textbox.on('blur', lib.bind(this.removeState, this, 'focus'));
 
             var searchButton = this.getChild('search');
-            if (this.searchMode === 'normal') {
+            if (searchButton) {
                 delegate(searchButton, 'click', this, 'search');
             }
         };
