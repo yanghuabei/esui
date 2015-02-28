@@ -23,7 +23,7 @@
             <div id="main">
                 <h2>SearchBox</h2>
                 <section class="intro">
-                    <p></p>
+                    <p>normal模式的SearchBox：回车或点击搜索按钮时触发搜索</p>
                 </section>
                 <section class="view">
                     <ul class="viewer">
@@ -32,23 +32,74 @@
                     <div class="example">
                         <div data-ui-type="SearchBox" data-ui-id="normal-search"></div>
                     </div>
-                    <div class="example">
-                        <div data-ui-type="SearchBox" data-ui-id="instant-search" data-ui-search-mode="instant"></div>
-                    </div>
                 </section>
-               <!--  <section class="intro">
-                    <p>变化。</p>
+                <section class="intro">
+                    <p>instant模式的SearchBox：搜索框内容变化时触发搜索</p>
                 </section>
                 <section class="view">
                     <ul class="viewer">
                         <li class="view-markup">结构</li>
                     </ul>
-                    <div class="example ui-demo-light-stage">
-                        <strong data-ui-type="Label" data-ui-variants="custom">Hello Label!</strong>
-                        <esui-label data-ui-type="Label" data-ui-variants="pointer-left hover">Custom Label!</esui-label>
-                        <esui-label data-ui-type="Label" data-ui-variants="circular">123</esui-label>
+                    <div class="example">
+                        <div data-ui-type="SearchBox" data-ui-id="instant-search" data-ui-search-mode="instant"></div>
                     </div>
-                </section> -->
+                </section>
+                <section class="intro">
+                    <p>disabled状态的SearchBox</p>
+                </section>
+                <section class="view">
+                    <ul class="viewer">
+                        <li class="view-markup">结构</li>
+                    </ul>
+                    <div class="example">
+                        <div data-ui-type="SearchBox" data-ui-disabled="true"></div>
+                    </div>
+                    <div class="example">
+                        <div data-ui-type="SearchBox" data-ui-search-mode="instant" data-ui-disabled="true"></div>
+                    </div>
+                </section>
+                <section class="intro">
+                    <p>placeholder</p>
+                </section>
+                <section class="view">
+                    <ul class="viewer">
+                        <li class="view-markup">结构</li>
+                    </ul>
+                    <div class="example">
+                        <div data-ui-type="SearchBox" data-ui-placeholder="keyword"></div>
+                    </div>
+                    <div class="example">
+                        <div data-ui-type="SearchBox" data-ui-search-mode="instant" data-ui-placeholder="搜我啊搜我啊，哈哈哈哈哈哈哈哈哈哈"></div>
+                    </div>
+                </section>
+                <section class="intro">
+                    <p>带默认搜索关键词</p>
+                </section>
+                <section class="view">
+                    <ul class="viewer">
+                        <li class="view-markup">结构</li>
+                    </ul>
+                    <div class="example">
+                        <div data-ui-type="SearchBox" data-ui-text="要死了"></div>
+                    </div>
+                    <div class="example">
+                        <div data-ui-type="SearchBox" data-ui-search-mode="instant" data-ui-text="我是关键词"></div>
+                    </div>
+                </section>
+                <section class="intro">
+                    <p>fitWidth</p>
+                </section>
+                <section class="view">
+                    <ul class="viewer">
+                        <li class="view-markup">结构</li>
+                    </ul>
+                    <div class="example">
+                        <div data-ui-type="SearchBox" data-ui-text="要死了"     data-ui-fit-width="true"></div>
+                    </div>
+                    <div class="example">
+                        <div data-ui-type="SearchBox" data-ui-search-mode="instant" data-ui-text="我是关键词" data-ui-fit-width="true"></div>
+                    </div>
+                </section>
             </div>
         </div>
         <script>

@@ -39,8 +39,6 @@ define(
             var properties = {
                 // 搜索模式：`instant`、`normal`
                 searchMode: 'normal',
-                // 是否是最小化的，默认的样式是仅显示放大镜
-                minimized: false,
                 // 默认值为''
                 text: '',
                 // 控件内部使用的状态，外部MUST NOT设置该属性
@@ -50,10 +48,6 @@ define(
 
             if (properties.disabled === 'false') {
                 properties.disabled = false;
-            }
-
-            if (properties.minimized === 'false') {
-                properties.minimized = false;
             }
 
             if (lib.isInput(this.main)) {
@@ -96,7 +90,7 @@ define(
          */
         SearchBox.prototype.initStructure = function () {
             var tpl = ''
-                + '<div data-ui-mode="text" data-ui-child-name="text" data-ui-height="${height}"'
+                + '<div data-ui-mode="text" data-ui-child-name="text"'
                 +     'data-ui-type="TextBox" data-ui-placeholder="${placeholder}"'
                 +     'data-ui-icon="${clearClasses}" data-ui-icon-position="right">'
                 + '</div>';
@@ -104,7 +98,7 @@ define(
             // 即时搜索不需要搜索按钮
             var searchIconHTML = '<span class="' + this.helper.getIconClass('search') + '"></span>';
             var searchTPL = ''
-                + '<button data-ui="childName:search;type:Button;" class="${searchClasses}">'
+                + '<button data-ui="childName:search;type:Button;" class="${searchClasses} ui-button-primary">'
                 +     searchIconHTML
                 + '</button>';
             if (this.searchMode === 'instant') {
@@ -117,7 +111,6 @@ define(
             var html = lib.format(
                 tpl,
                 {
-                    height: this.height,
                     placeholder: this.placeholder,
                     clearClasses: this.helper.getIconClass('times-circle'),
                     searchClasses: this.helper.getPartClassName('search')
@@ -172,12 +165,18 @@ define(
             }
         };
 
+        /**
+         * 处理输入框的input事件，根据输入框是否有内容增加/移除`searched`状态
+         */
         function onInput() {
             var textbox = this.getChild('text');
             var method = textbox.getValue() ? 'addState' : 'removeState';
             this[method]('searched');
         }
 
+        /**
+         * 清除搜索关键词，`instant`模式下触发搜索
+         */
         function clear() {
             var textbox = this.getChild('text');
             textbox.setValue('');
@@ -212,9 +211,10 @@ define(
             {
                 name: [
                     'maxLength', 'placeholder', 'text',
-                    'width', 'disabled', 'readOnly'
+                    'width', 'height', 'disabled', 'readOnly'
                 ],
-                paint: function (box, maxLength, placeholder, text, width, disabled, readOnly) {
+                /* eslint-disable max-params */
+                paint: function (box, maxLength, placeholder, text, width, height, disabled, readOnly) {
                     var properties = {
                         /**
                          * @property {number} maxLength
@@ -241,17 +241,28 @@ define(
                          * 设定文本框宽度，参考{@link TextBox#width}
                          */
                         width: width,
+                        height: height,
                         disabled: disabled,
                         readOnly: readOnly
                     };
                     box.getChild('text').setProperties(properties);
                 }
+                /* eslint-enable max-params */
             },
             {
                 name: 'disabled',
                 paint: function (box, disabled) {
                     var searchButton = box.getChild('search');
                     searchButton && searchButton.set('disabled', disabled);
+                }
+            },
+            {
+                name: 'height',
+                paint: function (box, height) {
+                    var searchBtn = box.getChild('search');
+                    if (searchBtn) {
+                        searchBtn.setProperties({height: height});
+                    }
                 }
             },
             {
@@ -267,6 +278,11 @@ define(
                 }
             },
             {
+                /**
+                 * @property {boolean} searched
+                 *
+                 * 设定SearchBox是否已有搜素关键词
+                 */
                 name: 'searched',
                 paint: function (box, searched) {
                     var method = searched ? 'addState' : 'removeState';
@@ -274,30 +290,17 @@ define(
                 }
             },
             {
-                name: 'minimized',
-                paint: function (box, minimized) {
-                    var method = minimized ? 'addState' : 'removeState';
-                    box[method]('minimized');
-                }
-            },
-            {
+                /**
+                 * @property {boolean} searched
+                 *
+                 * 设定SearchBox的工作模式：`instant` | `normal`
+                 */
                 name: 'searchMode',
                 paint: function (box, searchMode) {
                     box.addState(searchMode);
                 }
             }
         );
-
-        /**
-         * 获取用于比对的text属性值
-         *
-         * @return {string}
-         * @protected
-         */
-        SearchBox.prototype.getTextProperty = function () {
-            var textbox = this.getChild('text');
-            return textbox ? textbox.getValue() : this.text;
-        };
 
         lib.inherits(SearchBox, Control);
         ui.register(SearchBox);

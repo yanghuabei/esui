@@ -2803,8 +2803,23 @@ span.ui-crumb-node {
   position: relative;
   overflow: hidden;
 }
+.ui-searchbox .ui-textbox input {
+  padding: 0.65em;
+  border: 1px solid #dddddd;
+}
+.ui-searchbox .ui-textbox input:focus {
+  border: 1px solid #6ccdc0;
+}
 .ui-searchbox .ui-textbox-icon {
   right: 5000px;
+  color: #dddddd;
+}
+.ui-searchbox .ui-textbox-icon:hover,
+.ui-searchbox .ui-textbox-icon:active {
+  color: #6ccdc0;
+}
+.ui-searchbox-focus .ui-textbox-icon {
+  color: #6ccdc0;
 }
 .ui-searchbox-searched .ui-textbox input {
   padding-right: 2.6em;
@@ -2812,7 +2827,26 @@ span.ui-crumb-node {
 .ui-searchbox-searched .ui-textbox-icon {
   right: 0;
 }
-.ui-searchbox-fit-width .ui-textbox {
+.ui-searchbox-fit-width.ui-searchbox-instant {
+  display: block;
+}
+.ui-searchbox-fit-width.ui-searchbox-instant .ui-textbox {
+  width: 100%;
+}
+.ui-searchbox-fit-width.ui-searchbox-instant .ui-textbox input {
+  width: 100% !important;
+}
+.ui-searchbox-fit-width.ui-searchbox-normal {
+  display: table-row;
+}
+.ui-searchbox-fit-width.ui-searchbox-normal .ui-textbox,
+.ui-searchbox-fit-width.ui-searchbox-normal .ui-searchbox-search {
+  display: table-cell;
+}
+.ui-searchbox-fit-width.ui-searchbox-normal .ui-textbox {
+  width: 100%;
+}
+.ui-searchbox-fit-width.ui-searchbox-normal .ui-textbox input {
   width: 100% !important;
 }
 .ui-searchbox-instant .ui-icon-search {

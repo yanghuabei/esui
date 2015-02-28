@@ -1,12 +1,43 @@
 @import "./mixin/util.less";
 
+@esui-search-box-active-color: @primary-color;
+@esui-search-box-input-padding: @esf-input-padding;
+@esui-search-box-input-height: @esf-input-height;
+@esui-search-box-input-border-color: #ddd;
+@esui-search-box-input-border-color-focus: @esui-search-box-active-color;
+@esui-search-box-clear-icon-color: #ddd;
+@esui-search-box-clear-icon-color-active: @esui-search-box-active-color;
+
 .@{ui-class-prefix}-searchbox {
     .inline-block();
     position: relative;
     overflow: hidden;
 
+    .@{ui-class-prefix}-textbox {
+        input {
+            padding: @esui-search-box-input-padding;
+            border: 1px solid @esui-search-box-input-border-color;
+
+            &:focus {
+                border: 1px solid @esui-search-box-input-border-color-focus;
+            }
+        }
+    }
+
     .@{ui-class-prefix}-textbox-icon {
         right: 5000px;
+        color: @esui-search-box-clear-icon-color;
+
+        &:hover,
+        &:active {
+            color: @esui-search-box-clear-icon-color-active;
+        }
+    }
+}
+
+.@{ui-class-prefix}-searchbox-focus {
+    .@{ui-class-prefix}-textbox-icon {
+        color: @esui-search-box-clear-icon-color-active;
     }
 }
 
@@ -14,7 +45,7 @@
 .@{ui-class-prefix}-searchbox-searched {
     .@{ui-class-prefix}-textbox {
         input {
-            padding-right: @esf-input-height + 0.2em;
+            padding-right: @esui-search-box-input-height + 0.2em;
         }
     }
 
@@ -25,13 +56,34 @@
 
 // 独占一行
 .@{ui-class-prefix}-searchbox-fit-width {
-    .@{ui-class-prefix}-textbox {
-        width: 100% !important;
-    }
-}
+    &.@{ui-class-prefix}-searchbox-instant {
+        display: block;
 
-// focus状态
-.@{ui-class-prefix}-searchbox-focus {
+        .@{ui-class-prefix}-textbox {
+            width: 100%;
+
+            input {
+                width: 100% !important;
+            }
+        }
+    }
+
+    &.@{ui-class-prefix}-searchbox-normal {
+        display: table-row;
+
+        .@{ui-class-prefix}-textbox,
+        .@{ui-class-prefix}-searchbox-search {
+            display: table-cell;
+        }
+
+        .@{ui-class-prefix}-textbox {
+            width: 100%;
+
+            input {
+                width: 100% !important;
+            }
+        }
+    }
 }
 
 .@{ui-class-prefix}-searchbox-instant {
@@ -39,15 +91,15 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: @esf-input-height + 0.2em;
-        height: @esf-input-height;
-        line-height: @esf-input-height;
+        width: @esui-search-box-input-height + 0.2em;
+        height: @esui-search-box-input-height;
+        line-height: @esui-search-box-input-height;
         text-align: center;
     }
 
     .@{ui-class-prefix}-textbox {
         input {
-            padding-left: @esf-input-height + 0.2em;
+            padding-left: @esui-search-box-input-height + 0.2em;
         }
     }
 }

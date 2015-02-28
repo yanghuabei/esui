@@ -1,30 +1,10 @@
- /**
-  * ESUI (Enterprise Simple UI)
-  * Copyright 2013 Baidu Inc. All rights reserved.
-  *
-  * @file 搜索框控件
-  * @author otakustay
-  */
 @import "mixin.less";
 @import "variable.less";
 
-@esui-search-box-textbox-height: 25px;
-@esui-search-box-icon-width: 25px;
-
-.normal-search-icon() {
-    background: transparent url(../img/search.png) no-repeat center -25px;
-}
-.active-search-icon() {
-    background: transparent url(../img/search.png) no-repeat center 0;
-}
-
-.normal-clear-icon() {
-    background: transparent url(../img/esui-btn-clear.png) no-repeat center;
-}
-
-.active-clear-icon() {
-    background: transparent url(../img/esui-btn-clear-hover.png) no-repeat center;
-}
+@esui-search-box-textbox-padding-horizon: 4px;
+@esui-search-box-height: 25px;
+@esui-search-box-search-button-width: 25px;
+@esui-search-box-clear-width: 25px;
 
 .@{ui-class-prefix}-searchbox {
     .inline-block();
@@ -33,90 +13,13 @@
 
     .@{ui-class-prefix}-textbox {
         input {
+            padding-right: @esui-search-box-textbox-padding-horizon;
             .box-sizing(border-box);
-            height: @esui-search-box-textbox-height;
-            border: 1px solid #d8d8d8;
-
-            &:hover {
-                border-color: #d0d0d0;
-            }
-
-            &:focus {
-                border-color: #bbbbbb;
-            }
         }
     }
 
     .@{ui-class-prefix}-textbox-icon {
         right: 5000px;
-        height: @esui-search-box-textbox-height;
-        width: @esui-search-box-icon-width;
-        position: absolute;
-        top: 0;
-    }
-
-    .@{ui-class-prefix}-button {
-        min-height: 0;
-        border: none;
-    }
-
-    .@{ui-class-prefix}-button-disabled {
-        &:hover {
-            cursor: default;
-        }
-    }
-}
-
-.@{ui-class-prefix}-searchbox-clear {
-    .normal-clear-icon();
-
-    &:hover,
-    &:active {
-        .active-clear-icon();
-    }
-}
-
-.@{ui-class-prefix}-searchbox-search {
-    .normal-search-icon();
-    text-indent: -5000px;
-    width: @esui-search-box-icon-width;
-    height: @esui-search-box-textbox-height;
-    .inline-block();
-    vertical-align: middle;
-
-    &:hover,
-    &:active {
-        background: none;
-        .active-search-icon();
-    }
-}
-
-.normal-searchbox-2x() {
-    background-image: url(../img/search@2x.png);
-    background-size: 15px 50px;
-    background-position: center -25px;
-}
-
-.active-searchbox-2x() {
-    background-image: url(../img/search@2x.png);
-    background-size: 15px 50px;
-    background-position: center 0;
-}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .@{ui-class-prefix}-searchbox-search {
-        .normal-searchbox-2x();
-
-        &:hover,
-        &:active {
-            .active-searchbox-2x();
-        }
-    }
-
-    .@{ui-class-prefix}-searchbox-focus {
-        .@{ui-class-prefix}-searchbox-search {
-            .active-searchbox-2x();
-        }
     }
 }
 
@@ -124,7 +27,7 @@
 .@{ui-class-prefix}-searchbox-searched {
     .@{ui-class-prefix}-textbox {
         input {
-            padding-right: @esui-search-box-icon-width;
+            padding-right: @esui-search-box-clear-width;
         }
     }
 
@@ -135,36 +38,50 @@
 
 // 独占一行
 .@{ui-class-prefix}-searchbox-fit-width {
-    .@{ui-class-prefix}-textbox {
-        width: 100% !important;
-    }
-}
+    &.@{ui-class-prefix}-searchbox-instant {
+        display: block;
 
-// focus状态
-.@{ui-class-prefix}-searchbox-focus {
-    .@{ui-class-prefix}-searchbox-search {
-        .active-search-icon();
+        .@{ui-class-prefix}-textbox {
+            width: 100%;
+
+            input {
+                width: 100% !important;
+            }
+        }
     }
 
-    .@{ui-class-prefix}-searchbox-clear {
-        .active-clear-icon();
+    &.@{ui-class-prefix}-searchbox-normal {
+        display: table-row;
+
+        .@{ui-class-prefix}-textbox,
+        .@{ui-class-prefix}-searchbox-search {
+            display: table-cell;
+        }
+
+        .@{ui-class-prefix}-textbox {
+            width: 100%;
+
+            input {
+                width: 100% !important;
+            }
+        }
     }
 }
 
 .@{ui-class-prefix}-searchbox-instant {
-    .@{ui-class-prefix}-searchbox-search {
+    .@{ui-class-prefix}-icon-search {
         position: absolute;
         top: 0;
         left: 0;
+        width: @esui-search-box-search-button-width;
+        height: @esui-search-box-height;
+        line-height: @esui-search-box-height;
+        text-align: center;
     }
 
     .@{ui-class-prefix}-textbox {
         input {
-            padding-left: @esui-search-box-icon-width;
+            padding-left: @esui-search-box-search-button-width;
         }
-    }
-
-    .@{ui-class-prefix}-searchbox-search {
-        cursor: default;
     }
 }
