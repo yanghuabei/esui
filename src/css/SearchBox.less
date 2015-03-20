@@ -1,8 +1,93 @@
-@import "Variable.less";
-
+@esui-search-box-width: 240px;
 @esui-search-box-active-color: @esf-palette-primary-color;
-@esui-search-box-input-height: 2.4em;
-@esui-search-box-input-border-color: #ddd;
-@esui-search-box-input-border-color-focus: @esui-search-box-active-color;
+@esui-search-box-input-padding: @esf-textbox-padding;
+@esui-search-box-input-height: @esf-textbox-height;
 @esui-search-box-clear-icon-color: #ddd;
 @esui-search-box-clear-icon-color-active: @esui-search-box-active-color;
+
+.@{ui-class-prefix}-searchbox {
+    position: relative;
+    width: @esui-search-box-width;
+    overflow: hidden;
+
+    .@{ui-class-prefix}-textbox {
+        input {
+            padding: @esui-search-box-input-padding;
+            width: 100% !important;
+        }
+    }
+
+    .@{ui-class-prefix}-textbox-icon {
+        // height: 0;
+        // visibility: hidden;
+        right: -@esui-search-box-input-height - 0.2em;
+        color: @esui-search-box-clear-icon-color;
+
+        &:hover,
+        &:active {
+            color: @esui-search-box-clear-icon-color-active;
+        }
+    }
+
+    .@{ui-class-prefix}-textbox-addon {
+        display: table-cell;
+    }
+}
+
+.@{ui-class-prefix}-searchbox-focus {
+    .@{ui-class-prefix}-textbox-icon {
+        color: @esui-search-box-clear-icon-color-active;
+    }
+}
+
+// 搜索状态
+.@{ui-class-prefix}-searchbox-searched {
+    .@{ui-class-prefix}-textbox {
+        input {
+            padding-right: @esui-search-box-input-height + 0.2em;
+        }
+    }
+
+    .@{ui-class-prefix}-textbox-icon {
+        .esf-transition(right 0.3s linear);
+        right: 0;
+        // height: auto;
+        // visibility: visible;
+    }
+}
+
+// 独占一行
+.@{ui-class-prefix}-searchbox-fit-width {
+    display: block;
+    width: 100%;
+}
+
+.@{ui-class-prefix}-searchbox-instant {
+    .@{ui-class-prefix}-icon-search {
+        display: inline-block;
+        padding: 0 0.5em;
+        background-color: #fff;
+        height: @esui-search-box-input-height;
+        line-height: @esui-search-box-input-height;
+        border: 1px solid #ddd;
+        .box-sizing(border-box);
+        .border-radius(5px);
+        .esf-border-right-radius(0, @esf-textbox-radius);
+        border-right: 0 !important;
+    }
+
+    &.@{ui-class-prefix}-searchbox-focus {
+        .@{ui-class-prefix}-icon-search {
+            border-color: @esui-search-box-active-color;
+            background-color: #f9fdfc;
+        }
+    }
+}
+
+.@{ui-class-prefix}-searchbox-disabled {
+    &.@{ui-class-prefix}-searchbox {
+        .@{ui-class-prefix}-icon-search {
+            opacity: 0.4;
+        }
+    }
+}
